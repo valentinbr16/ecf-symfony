@@ -75,7 +75,10 @@ Données indispensables :
 
 Note : le mot de passe haché correspond au mot de passe clair `123`.
 
-Données de test : aucunes
+Données de test : 
+- il y a 3 nouveaux users de type ROLE_EMPRUNTEURS avec données constantes à créer
+- il y a 100 nouveaux users de type ROLE_EMPRUNTEURS avec données aléatoires à créer
+- il faut relier ces 103 users aux 103 profils emprunteurs que vous avez (peut-être) déjà créé
 
 ### Livre
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmprunteurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,14 +50,20 @@ class Emprunteur
     private $date_modification;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\OneToMany(targetEntity=Emprunt::class, mappedBy="emprunteur")
      */
-    private $date_emprunt;
+    private $emprunts;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $date_retour;
+    private $user;
+
+    public function __construct()
+    {
+        $this->emprunts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -134,27 +142,46 @@ class Emprunteur
         return $this;
     }
 
-    public function getDateEmprunt(): ?\DateTimeInterface
+    /**
+     * @return Collection|Emprunt[]
+     */
+    public function getEmprunts(): Collection
     {
-        return $this->date_emprunt;
+        return $this->emprunts;
     }
 
-    public function setDateEmprunt(\DateTimeInterface $date_emprunt): self
+    public function addEmprunt(Emprunt $emprunt): self
     {
-        $this->date_emprunt = $date_emprunt;
+        if (!$this->emprunts->contains($emprunt)) {
+            $this->emprunts[] = $emprunt;
+            $emprunt->setEmprunteur($this);
+        }
 
         return $this;
     }
 
-    public function getDateRetour(): ?\DateTimeInterface
+    public function removeEmprunt(Emprunt $emprunt): self
     {
-        return $this->date_retour;
-    }
-
-    public function setDateRetour(?\DateTimeInterface $date_retour): self
-    {
-        $this->date_retour = $date_retour;
+        if ($this->emprunts->removeElement($emprunt)) {
+            // set the owning side to null (unless already changed)
+            if ($emprunt->getEmprunteur() === $this) {
+                $emprunt->setEmprunteur(null);
+            }
+        }
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 }

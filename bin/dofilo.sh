@@ -10,7 +10,8 @@ php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:schema:validate
 
 # Injection des données de test dans la BDD
-# php bin/console doctrine:fixtures:load 
+# à désactiver avant la phase des fixtures
+php bin/console doctrine:fixtures:load 
 # --group=test --no-interaction
 
 # à rentrer une fois dans le terminal pour rendre le script exécutable : (fait)
