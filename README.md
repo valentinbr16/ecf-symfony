@@ -69,16 +69,18 @@ Relations :
 
 Données indispensables :
 
-| id | email             | roles          | password                                                     |
-|----|-------------------|----------------|--------------------------------------------------------------|
-| 1  | admin@example.com | ["ROLE_ADMIN"] | $2y$10$/H2ChUxriH.0Q33g3EUEx.S2s4j/rGJH2G88jK9nCP60GbUW8mi5K |
+| id | email               | roles              | password                                                     |
+|----|---------------------|--------------------|--------------------------------------------------------------|
+| 1  | admin@example.com   | ["ROLE_ADMIN"]     | $2y$10$/H2ChUxriH.0Q33g3EUEx.S2s4j/rGJH2G88jK9nCP60GbUW8mi5K |
+| 2  | foo.foo@example.com | ["ROLE_EMRUNTEUR"] | $2y$10$/H2ChUxriH.0Q33g3EUEx.S2s4j/rGJH2G88jK9nCP60GbUW8mi5K |
+| 3  | bar.bar@example.com | ["ROLE_EMRUNTEUR"] | $2y$10$/H2ChUxriH.0Q33g3EUEx.S2s4j/rGJH2G88jK9nCP60GbUW8mi5K |
+| 4  | baz.baz@example.com | ["ROLE_EMRUNTEUR"] | $2y$10$/H2ChUxriH.0Q33g3EUEx.S2s4j/rGJH2G88jK9nCP60GbUW8mi5K |
 
 Note : le mot de passe haché correspond au mot de passe clair `123`.
 
-Données de test : 
-- il y a 3 nouveaux users de type ROLE_EMPRUNTEURS avec données constantes à créer
-- il y a 100 nouveaux users de type ROLE_EMPRUNTEURS avec données aléatoires à créer
-- il faut relier ces 103 users aux 103 profils emprunteurs que vous avez (peut-être) déjà créé
+Données de test : 100 users dont les données sont générées aléatoirement
+
+Attention : chaque user doit être relié à un emprunteur mais n'oubliez pas que la relation est unidirectionnelle et qu'elle n'est visible que depuis l'emprunteur
 
 ### Livre
 
@@ -219,3 +221,11 @@ Données indispensables :
 | 3  | 2020-04-01 10:00:00 | NULL                | 3             | 3        |
 
 Données de test : 200 emprunts dont les données sont générées aléatoirement
+
+### Dépendances
+- User
+- Livre
+  - Auteur
+- Auteur
+- Genre
+  - Livre
