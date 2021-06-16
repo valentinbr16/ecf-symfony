@@ -38,12 +38,13 @@ class AppFixtures extends Fixture
         $emprunteursCount = 100;
         $empruntsCount = 200;
 
-        $this->loadUser($manager);
-        $this->loadAuteur($manager, $auteursCount);
-        $this->loadLivre($manager, $auteurs, $livresCount);
-        $this->loadGenre($manager);
-        $this->loadEmprunteur($manager, $emprunteursCount);
-        $this->loadEmprunt($manager, $empruntsCount);
+        $user = $this->loadUser($manager);
+        $auteurs = $this->loadAuteur($manager, $auteursCount);
+        $genres = $this->loadGenre($manager);
+        $emprunts = $this->loadEmprunt($manager, $empruntsCount);
+        $livres = $this->loadLivre($manager, $auteurs, $genres, $emprunts, $livresCount);
+        $emprunteurs = $this->loadEmprunteur($manager, $emprunteursCount);
+
 
         $manager->flush();
     }
@@ -87,12 +88,13 @@ class AppFixtures extends Fixture
     }
 
     
-    public function loadLivre(ObjectManager $manager, array $auteurs, int $count)
+    public function loadLivre(ObjectManager $manager, array $auteursParam, array $genresParam, array $empruntParam, int $count)
     {
         $livres = [];
 
-        $auteurIndex = 0;
-        $auteur = $auteurs[$auteurIndex];
+        $auteur = $auteursParam[0];
+        $genre = $genresParam[0];
+        $emprunt = $empruntParam[0];
 
         $isbn = '9785786930024';
 
@@ -102,8 +104,8 @@ class AppFixtures extends Fixture
         $livre->setNombrePages(100);
         $livre->setCodeIsbn('9785786930024');
         $livre->setAuteur($auteur);
-        $livre->addGenre(1);
-        $livre->addEmprunt(1);
+        $livre->addGenre($genre);
+        $livre->addEmprunt($emprunt);
 
         $manager->persist($livre);
         $livres[] = $livre;
@@ -116,9 +118,9 @@ class AppFixtures extends Fixture
         $livre->setCodeIsbn($isbn + $i);
         // @todo  2 random livre per auteur 
         $livre->setAuteur($auteur);
-        $livre->addGenre($this->faker->numberBetween($min = 1, $max = 13));
+        $livre->addGenre($genresParam[$this->faker->numberBetween($min = 0, $max = 12)]);
         // @todo random emprunteur
-        $livre->addEmprunt(1);
+        $livre->addEmprunt($emprunt);
 
         $manager->persist($livre);
         $livres[] = $livre;
@@ -135,89 +137,79 @@ class AppFixtures extends Fixture
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('nouvelle');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('roman historique');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom("roman d'amour");
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom("roman d'aventure");
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('science-fiction');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('fantasy');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('biographie');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('conte');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('témoignage');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('théâtre');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('essai');
 
         $manager->persist($genre);
         $genres[] = $genre;
 
-        $genres = [];
         $genre = new Genre();
         $genre->setNom('journal intime');
 
         $manager->persist($genre);
         $genres[] = $genre;
+
+        return $genres;
     }
 
     public function loadEmprunteur(ObjectManager $manager, int $count)
@@ -228,7 +220,7 @@ class AppFixtures extends Fixture
         $emprunteur->setPrenom('foo');
         $emprunteur->setTel('123456789');
         $emprunteur->setActif(true);
-        $emprunteur->setDateCreation('2020-01-01 10:00:00');
+        $emprunteur->setDateCreation(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-01-01 10:00:00'));
 
         $manager->persist($emprunteur);
         $emprunteurs[] = $emprunteur;
@@ -240,7 +232,8 @@ class AppFixtures extends Fixture
             $emprunteur->setPrenom($this->faker->firstname());
             $emprunteur->setTel($this->faker->phoneNumber());
             $emprunteur->setActif($this->faker->boolean());
-            $emprunteur->setStartDate(\DateTime::createFromFormat('Y-m-d H:i:s', '2010-01-01 00:00:00'));
+            $emprunteur->setDateCreation(\DateTime::createFromFormat('Y-m-d H:i:s', '2010-01-01 00:00:00'));
+            // @todo $emprunteur->setUser  Rajouter les roles aux emprunteurs
 
             $manager->persist($emprunteur);
             $emprunteurs[] = $emprunteur;
@@ -251,8 +244,8 @@ class AppFixtures extends Fixture
     {
         $emprunts = [];
         $emprunt = new Emprunt();
-        $emprunt->setDateEmprunt('2020-02-01 10:00:00');
-        $emprunt->setDateRetour('2020-03-01 10:00:00');
+        $emprunt->setDateEmprunt(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-02-01 10:00:00'));
+        $emprunt->setDateRetour(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-03-01 10:00:00'));
 
         $manager->persist($emprunt);
         $emprunts[] = $emprunt;
@@ -260,12 +253,14 @@ class AppFixtures extends Fixture
         for($i = 1; $i < $count; $i++) {
             $emprunts = [];
             $emprunt = new Emprunt();
-            $emprunt->setDateEmprunt('2020-02-01 10:00:00');
-            $emprunt->setDateRetour('2020-03-01 10:00:00');
+            $emprunt->setDateEmprunt($this->faker->dateTimeThisYear($max = 'now', $timezone =null));
+            $emprunt->setDateRetour($this->faker->dateTimeThisYear($max = 'now', $timezone =null));
 
             $manager->persist($emprunt);
             $emprunts[] = $emprunt;
             }
+
+        return $emprunts;
     }
     
 }
