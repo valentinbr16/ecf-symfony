@@ -110,7 +110,55 @@ class AppFixtures extends Fixture
         $manager->persist($livre);
         $livres[] = $livre;
 
-        for($i = 1; $i < $count; $i++) {
+        $auteur = $auteursParam[1];
+        $genre = $genresParam[1];
+        $emprunt = $empruntsParam[1];
+
+        $livre = new Livre();
+        $livre->setTitre('Consectetur adipiscing elit');
+        $livre->setAnneeEdition(2011);
+        $livre->setNombrePages(150);
+        $livre->setCodeIsbn('9783817260935');
+        $livre->setAuteur($auteur);
+        $livre->addGenre($genre);
+        $livre->addEmprunt($emprunt);
+
+        $manager->persist($livre);
+        $livres[] = $livre;
+
+        $auteur = $auteursParam[2];
+        $genre = $genresParam[2];
+        $emprunt = $empruntsParam[2];
+
+        $livre = new Livre();
+        $livre->setTitre('Mihi quidem Antiochum');
+        $livre->setAnneeEdition(2012);
+        $livre->setNombrePages(200);
+        $livre->setCodeIsbn('9782020493727');
+        $livre->setAuteur($auteur);
+        $livre->addGenre($genre);
+        $livre->addEmprunt($emprunt);
+
+        $manager->persist($livre);
+        $livres[] = $livre;
+
+        $auteur = $auteursParam[3];
+        $genre = $genresParam[3];
+        $emprunt = $empruntsParam[3];
+
+        $livre = new Livre();
+        $livre->setTitre('Quem audis satis belle');
+        $livre->setAnneeEdition(2013);
+        $livre->setNombrePages(250);
+        $livre->setCodeIsbn('9794059561353');
+        $livre->setAuteur($auteur);
+        $livre->addGenre($genre);
+        $livre->addEmprunt($emprunt);
+
+        $manager->persist($livre);
+        $livres[] = $livre;
+
+        for($i = 4; $i < $count; $i++) {
             if($i%2 === 0) {
                 $auteurIndex = $i/2;
 
@@ -235,7 +283,7 @@ class AppFixtures extends Fixture
         $emprunteurs = [];
 
         $user = new User();
-        $user->setEmail('emprunteur@example.com');
+        $user->setEmail('foo.foo@example.com');
         $password = $this->encoder->encodePassword($user, '123');
         $user->setPassword($password);
         $user->setRoles(['ROLE_EMPRUNTEUR']);
@@ -253,7 +301,45 @@ class AppFixtures extends Fixture
         $manager->persist($emprunteur);
         $emprunteurs[] = $emprunteur;
 
-        for($i = 1; $i < $count; $i++) {
+        $user = new User();
+        $user->setEmail('bar.bar@example.com');
+        $password = $this->encoder->encodePassword($user, '123');
+        $user->setPassword($password);
+        $user->setRoles(['ROLE_EMPRUNTEUR']);
+
+        $manager->persist($user);
+
+        $emprunteur = new Emprunteur();
+        $emprunteur->setNom('bar');
+        $emprunteur->setPrenom('bar');
+        $emprunteur->setTel('123456789');
+        $emprunteur->setActif(true);
+        $emprunteur->setDateCreation(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-01-01 10:00:00'));
+        $emprunteur->setUser($user);
+
+        $manager->persist($emprunteur);
+        $emprunteurs[] = $emprunteur;
+
+        $user = new User();
+        $user->setEmail('baz.baz@example.com');
+        $password = $this->encoder->encodePassword($user, '123');
+        $user->setPassword($password);
+        $user->setRoles(['ROLE_EMPRUNTEUR']);
+
+        $manager->persist($user);
+
+        $emprunteur = new Emprunteur();
+        $emprunteur->setNom('baz');
+        $emprunteur->setPrenom('baz');
+        $emprunteur->setTel('123456789');
+        $emprunteur->setActif(true);
+        $emprunteur->setDateCreation(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-01-01 10:00:00'));
+        $emprunteur->setUser($user);
+
+        $manager->persist($emprunteur);
+        $emprunteurs[] = $emprunteur;
+
+        for($i = 3; $i < $count; $i++) {
 
             $user = new User();
             $user->setEmail($this->faker->email());
@@ -313,7 +399,6 @@ class AppFixtures extends Fixture
                 $emprunts[] = $emprunt;
             }
         }
-
         return $emprunts;
     }
     
