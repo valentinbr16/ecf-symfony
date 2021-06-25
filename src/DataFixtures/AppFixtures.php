@@ -75,7 +75,6 @@ class AppFixtures extends Fixture
         $auteurs[] = $auteur;
 
         for($i = 1; $i < $count; $i++) {
-            $auteurs = [];
             $auteur = new Auteur();
             $auteur->setNom($this->faker->lastname());
             $auteur->setPrenom($this->faker->firstname());
@@ -127,8 +126,6 @@ class AppFixtures extends Fixture
 
                 $manager->persist($livre);
                 $livres[] = $livre;
-
-                return $livres;
             } else {
                 $auteurIndex = ($i-1)/2;
 
@@ -144,8 +141,6 @@ class AppFixtures extends Fixture
 
                 $manager->persist($livre);
                 $livres[] = $livre;
-
-                return $livres;
             }
         }
     }
