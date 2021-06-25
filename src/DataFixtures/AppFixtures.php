@@ -127,6 +127,8 @@ class AppFixtures extends Fixture
 
                 $manager->persist($livre);
                 $livres[] = $livre;
+
+                return $livres;
             } else {
                 $auteurIndex = ($i-1)/2;
 
@@ -142,6 +144,8 @@ class AppFixtures extends Fixture
 
                 $manager->persist($livre);
                 $livres[] = $livre;
+
+                return $livres;
             }
         }
     }
@@ -255,7 +259,6 @@ class AppFixtures extends Fixture
         $emprunteurs[] = $emprunteur;
 
         for($i = 1; $i < $count; $i++) {
-            $emprunteurs = [];
 
             $user = new User();
             $user->setEmail($this->faker->email());
@@ -296,7 +299,6 @@ class AppFixtures extends Fixture
             if($i%2 === 0) {
                 $emprunteurIndex = $i/2;
 
-                $emprunts = [];
                 $emprunt = new Emprunt();
                 $emprunt->setDateEmprunt($this->faker->dateTimeThisYear($max = 'now', $timezone =null));
                 $emprunt->setDateRetour($this->faker->dateTimeThisYear($max = 'now', $timezone =null));
@@ -307,7 +309,6 @@ class AppFixtures extends Fixture
             } else {
                 $emprunteurIndex = ($i-1)/2;
 
-                $emprunts = [];
                 $emprunt = new Emprunt();
                 $emprunt->setDateEmprunt($this->faker->dateTimeThisYear($max = 'now', $timezone =null));
                 $emprunt->setDateRetour($this->faker->dateTimeThisYear($max = 'now', $timezone =null));
