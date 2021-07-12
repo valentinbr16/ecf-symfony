@@ -19,6 +19,17 @@ class EmpruntRepository extends ServiceEntityRepository
         parent::__construct($registry, Emprunt::class);
     }
 
+    public function findLastTen()
+    {
+        return $this->createQueryBuilder('e')
+        ->where('e.date_emprunt IS NOT NULL')
+        // ->setParameter('date', "{$date}")
+        ->orderBy('e.date_emprunt','DESC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * @return Emprunt[] Returns an array of Emprunt objects
     //  */
