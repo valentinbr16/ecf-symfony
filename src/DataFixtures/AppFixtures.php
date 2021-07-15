@@ -26,11 +26,6 @@ class AppFixtures extends Fixture
         $this->faker = FakerFactory::create('fr_FR');
     }
 
-    // public static function getGroups(): array
-    // {
-    //     return ['test'];
-    // }
-
     public function load(ObjectManager $manager)
     {
         $livresCount = 1000;
@@ -196,85 +191,17 @@ class AppFixtures extends Fixture
 
     public function loadGenre(ObjectManager $manager)
     {
+        $genresArray = ['poésie','nouvelle','roman historique',"roman d'amour","roman d'aventure",'science-fiction','fantasy','biographie','conte','témoignage','théâtre','essai','journal intime'];
         $genres = [];
-        $genre = new Genre();
-        $genre->setNom('poésie');
 
-        $manager->persist($genre);
-        $genres[] = $genre;
+        foreach ($genresArray as $genresElement) {
+            $genre = new Genre();
+            $genre->setNom($genresElement);
 
-        $genre = new Genre();
-        $genre->setNom('nouvelle');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('roman historique');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom("roman d'amour");
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom("roman d'aventure");
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('science-fiction');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('fantasy');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('biographie');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('conte');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('témoignage');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('théâtre');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('essai');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
-        $genre = new Genre();
-        $genre->setNom('journal intime');
-
-        $manager->persist($genre);
-        $genres[] = $genre;
-
+            $manager->persist($genre);
+            $genres[] = $genre;
+        }
+       
         return $genres;
     }
 
