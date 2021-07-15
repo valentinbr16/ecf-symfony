@@ -89,7 +89,6 @@ class AppFixtures extends Fixture
 
         $auteur = $auteursParam[0];
         $genre = $genresParam[0];
-        $emprunt = $empruntsParam[0];
 
         $isbn = '9785786930024';
 
@@ -100,14 +99,12 @@ class AppFixtures extends Fixture
         $livre->setCodeIsbn('9785786930024');
         $livre->setAuteur($auteur);
         $livre->addGenre($genre);
-        $livre->addEmprunt($emprunt);
 
         $manager->persist($livre);
         $livres[] = $livre;
 
         $auteur = $auteursParam[1];
         $genre = $genresParam[1];
-        $emprunt = $empruntsParam[1];
 
         $livre = new Livre();
         $livre->setTitre('Consectetur adipiscing elit');
@@ -116,14 +113,12 @@ class AppFixtures extends Fixture
         $livre->setCodeIsbn('9783817260935');
         $livre->setAuteur($auteur);
         $livre->addGenre($genre);
-        $livre->addEmprunt($emprunt);
 
         $manager->persist($livre);
         $livres[] = $livre;
 
         $auteur = $auteursParam[2];
         $genre = $genresParam[2];
-        $emprunt = $empruntsParam[2];
 
         $livre = new Livre();
         $livre->setTitre('Mihi quidem Antiochum');
@@ -132,14 +127,12 @@ class AppFixtures extends Fixture
         $livre->setCodeIsbn('9782020493727');
         $livre->setAuteur($auteur);
         $livre->addGenre($genre);
-        $livre->addEmprunt($emprunt);
 
         $manager->persist($livre);
         $livres[] = $livre;
 
         $auteur = $auteursParam[3];
         $genre = $genresParam[3];
-        $emprunt = $empruntsParam[3];
 
         $livre = new Livre();
         $livre->setTitre('Quem audis satis belle');
@@ -148,7 +141,6 @@ class AppFixtures extends Fixture
         $livre->setCodeIsbn('9794059561353');
         $livre->setAuteur($auteur);
         $livre->addGenre($genre);
-        $livre->addEmprunt($emprunt);
 
         $manager->persist($livre);
         $livres[] = $livre;
@@ -165,7 +157,7 @@ class AppFixtures extends Fixture
 
                 $livre->setAuteur($auteursParam[$auteurIndex]);
                 $livre->addGenre($genresParam[$this->faker->numberBetween($min = 0, $max = 12)]);
-                $livre->addEmprunt($emprunt);
+                $livre->addEmprunt($empruntsParam[floor($i/5)]);
 
                 $manager->persist($livre);
                 $livres[] = $livre;
@@ -180,12 +172,17 @@ class AppFixtures extends Fixture
 
                 $livre->setAuteur($auteursParam[$auteurIndex]);
                 $livre->addGenre($genresParam[$this->faker->numberBetween($min = 0, $max = 12)]);
-                $livre->addEmprunt($emprunt);
+                $livre->addEmprunt($empruntsParam[floor($i/5)]);
 
                 $manager->persist($livre);
                 $livres[] = $livre;
             }
         }
+
+        $livres[0]->addEmprunt($empruntsParam[0]);
+        $livres[1]->addEmprunt($empruntsParam[1]);
+        $livres[2]->addEmprunt($empruntsParam[2]);
+        $livres[3]->addEmprunt($empruntsParam[3]);
     }
 
 
