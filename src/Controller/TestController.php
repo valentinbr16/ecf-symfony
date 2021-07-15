@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Livre;
+use App\Entity\Emprunt;
 use App\Repository\EmprunteurRepository;
 use App\Repository\EmpruntRepository;
 use App\Repository\LivreRepository;
@@ -126,8 +127,57 @@ class TestController extends AbstractController
 
         //--------------------------------------------------
 
-        // $emprunt = $empruntRepository->findLastTen();
+        // $emprunts = $empruntRepository->findLastTen();
+        // dump($emprunts);
+
+        // $emprunts = $empruntRepository->findByEmprunteurId(2);
+        // dump($emprunts);
+
+        // $emprunts = $empruntRepository->findByLivreId(3);
+        // dump($emprunts);
+
+        // $emprunts = $empruntRepository->findByDateRetour('2021-01-01 00:00:00');
+        // dump($emprunts);
+
+        // $emprunts = $empruntRepository->findEmpruntsNonRendus();
+        // dump($emprunts);
+
+        // // Changer la date_retour sur PHPMyAdmin si non nulle
+        // $emprunt = $empruntRepository->findOneByLivreIdAndDateRetour(3);
         // dump($emprunt);
+
+        //-----------------------------------------------------
+        
+        // $emprunteurs = $emprunteurRepository->findAll();
+        // $livres = $livreRepository->findAll();
+
+        // $emprunt = new Emprunt();
+        // $emprunt->setDateEmprunt(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-12-01 16:00:00'));
+        // $emprunt->setDateRetour(NULL);
+        // $emprunt->setEmprunteur($emprunteurs[0]);
+        // $emprunt->setLivre($livres[0]);
+
+        // $entityManager->flush();
+        // dump($emprunt);
+
+        //-----------------------------------------------------
+
+        // $emprunt = $empruntRepository->findById(3)[0];
+        // dump($emprunt);
+
+        // $emprunt->setDateRetour(\DateTime::createFromFormat('Y-m-d H:i:s', '2020-05-01 10:00:00'));
+
+        // $entityManager->flush();
+        // dump($emprunt);
+
+        //-----------------------------------------------------
+
+        // $emprunt = $empruntRepository->findById(42)[0];
+        // dump($emprunt);
+
+        // $entityManager->remove($emprunt);
+        // $entityManager->flush();
+        // // dump($emprunt); // retourne une erreur, donc le livre a bien été supprimé
 
         exit();
     }
