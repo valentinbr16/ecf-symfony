@@ -95,8 +95,17 @@ class UsersAthenticatorAuthenticator extends AbstractFormLoginAuthenticator impl
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        $user = $token->getUser();
+
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            $url = $this->urlGenerator->generate('app_index');
+        } elseif (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
+            $url = $this->urlGenerator->generate('emprunt_index');
+        } else {
+            throw new \Exception("Votre rôle n'est pas reconnu");
+        }
+
+        return new RedirectResponse($url);
     }
 
     protected function getLoginUrl()
