@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Emprunteur;
+use App\Entity\Emprunt;
 use App\Form\EmprunteurType;
 use App\Repository\EmprunteurRepository;
+use App\Repository\EmpruntRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,28 +92,5 @@ class EmprunteurController extends AbstractController
         }
 
         return $this->redirectToRoute('emprunteur_index');
-    }
-
-    private function redirectEmprunteur(string $route, Emprunteur $emprunteur, EmprunteurRepository $emprunteurRepository)
-    {
-        // Récupération du compte de l'utilisateur qui est connecté
-        $user = $this->getUser();
-
-        // On vérifie si l'utilisateur est un emprunteur 
-        if (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
-            // Récupèration du profil emprunteur
-            $userEmprunteur = $emprunteurRepository->findOneByUser($user);
-
-            // Comparaison du profil demandé par l'utilisateur et le profil de l'utilisateur
-            // Si les deux sont différents, on redirige l'utilisateur vers la page de son profil
-            if ($emprunteur->getId() != $userEmprunteur->getId()) {
-                return $this->redirectToRoute($route, [
-                    'id' => $userEmprunteur->getId(),
-                ]);
-            }
-        }
-
-        // Si aucune redirection n'est nécessaire, on renvoit une valeur nulle
-        return null;
     }
 }

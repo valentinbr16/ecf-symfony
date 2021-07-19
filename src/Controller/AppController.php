@@ -17,7 +17,7 @@ class AppController extends AbstractController
      */
     public function index(LivreRepository $livreRepository): Response
     {
-        return $this->render('livre/index.html.twig', [
+        return $this->render('app/index.html.twig', [
             'livres' => $livreRepository->findAll(),
         ]);
     }
