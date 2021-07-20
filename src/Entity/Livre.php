@@ -118,6 +118,7 @@ class Livre
     {
         return $this->auteur;
     }
+    
 
     public function setAuteur(?Auteur $auteur): self
     {

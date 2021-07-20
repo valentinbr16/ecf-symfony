@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserPasswordType;
+use App\Form\UserType;
 use App\Entity\Emprunteur;
 use App\Entity\Emprunt;
 use App\Form\EmprunteurType;
@@ -11,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 /**
  * @Route("/emprunteur")
@@ -30,13 +35,21 @@ class EmprunteurController extends AbstractController
     /**
      * @Route("/new", name="emprunteur_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $emprunteur = new Emprunteur();
         $form = $this->createForm(EmprunteurType::class, $emprunteur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $emprunteur->getUser();
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('user')->get('plainPassword')->getData()
+                )
+            );
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($emprunteur);
             $entityManager->flush();

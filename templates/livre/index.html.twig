@@ -13,7 +13,8 @@
                 <th>Annee_edition</th>
                 <th>Nombre_pages</th>
                 <th>Code_isbn</th>
-                <th>actions</th>
+                <th>Auteur</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                 <td>{{ livre.anneeEdition }}</td>
                 <td>{{ livre.nombrePages }}</td>
                 <td>{{ livre.codeIsbn }}</td>
+                <td>{{ livre.auteur.nom }} {{livre.auteur.prenom}}</td>
                 <td>
                     <a href="{{ path('livre_show', {'id': livre.id}) }}">show</a>
                     <a href="{{ path('livre_edit', {'id': livre.id}) }}">edit</a>
