@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/emprunt")
@@ -63,8 +64,17 @@ class EmpruntController extends AbstractController
     /**
      * @Route("/{id}", name="emprunt_show", methods={"GET"})
      */
-    public function show(Emprunt $emprunt): Response
+    public function show(Emprunt $emprunt, EmprunteurRepository $emprunteurRepository): Response
     {
+        if ($this->isGranted('ROLE_EMPRUNTEUR')) {
+
+            $user = $this->getUser();
+            $emprunteur = $emprunteurRepository->findOneByUser($user);
+
+            if (!$emprunteur->getEmprunts()->contains($emprunt)) {
+                throw new NotFoundHttpException();
+            }
+        }
         return $this->render('emprunt/show.html.twig', [
             'emprunt' => $emprunt,
         ]);

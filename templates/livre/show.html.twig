@@ -28,6 +28,12 @@
                 <td>{{ livre.codeIsbn }}</td>
             </tr>
             <tr>
+                {% for genre in livre.genres %}
+                    <th>Genre</th>
+                    <td>{{genre.nom}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
                 <th>Auteur</th>
                 <td>{{ livre.auteur.nom }} {{livre.auteur.prenom}}</td>
             </tr>
