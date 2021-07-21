@@ -15,20 +15,16 @@
                 <th>Annee_edition</th>
                 <th>Nombre_pages</th>
                 <th>Code_isbn</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for livre in livres %}
             <tr>
                 <td>{{ livre.id }}</td>
-                <td>{{ livre.titre }}</td>
+                <td><a href="{{ path('livre_show', {'id': livre.id}) }}">{{ livre.titre }}</a></td>
                 <td>{{ livre.anneeEdition }}</td>
                 <td>{{ livre.nombrePages }}</td>
                 <td>{{ livre.codeIsbn }}</td>
-                <td>
-                    <a href="{{ path('livre_show', {'id': livre.id}) }}">show</a>
-                </td>
             </tr>
         {% endfor %}
         </tbody>
