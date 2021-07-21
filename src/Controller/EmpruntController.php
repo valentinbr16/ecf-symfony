@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Emprunteur;
-use App\Form\EmprunteurType;
 use App\Repository\EmprunteurRepository;
 use App\Entity\Emprunt;
 use App\Form\EmpruntType;
@@ -23,23 +21,20 @@ class EmpruntController extends AbstractController
      */
     public function index(EmpruntRepository $empruntRepository, EmprunteurRepository $emprunteurRepository): Response
     {
-        {
-            $emprunts = $empruntRepository->findAll();
-            // Récupération du compte de l'utilisateur qui est connecté
-            $user = $this->getUser();
+        $emprunts = $empruntRepository->findAll();
+        // Récupération du compte de l'utilisateur qui est connecté
+        $user = $this->getUser();
     
             // On vérifie si l'utilisateur est un emprunteur 
-            if (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
-                // Récupèration du profil emprunteur
-
-                $emprunteur = $emprunteurRepository->findOneByUser($user);
-                $emprunts = $emprunteur->getEmprunts();
-    
-                    return $this->render('emprunt/index.html.twig', [
-                        'emprunts' => $emprunts
-                    ]);
-            }
+        if (in_array('ROLE_EMPRUNTEUR', $user->getRoles())) {
+            // Récupèration du profil emprunteur
+            $emprunteur = $emprunteurRepository->findOneByUser($user);
+            $emprunts = $emprunteur->getEmprunts();
         }
+
+        return $this->render('emprunt/index.html.twig', [
+            'emprunts' => $emprunts
+        ]);
     }
 
     /**

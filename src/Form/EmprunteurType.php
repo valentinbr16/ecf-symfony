@@ -19,13 +19,6 @@ class EmprunteurType extends AbstractType
                     'class' => 'd-none',
                 ]
             ])
-            // ->add('emprunt', EmpruntType::class, [
-            //     'label_attr' => [
-            //         'class' => 'd-none',
-            //         'multiple' => true,
-            //         'expanded' => true,
-            //     ]
-            // ])
             ->add('nom')
             ->add('prenom')
             ->add('tel')

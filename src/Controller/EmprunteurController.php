@@ -106,4 +106,17 @@ class EmprunteurController extends AbstractController
 
         return $this->redirectToRoute('emprunteur_index');
     }
+
+    public function findOneByUser(User $user, string $role = '')
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('e.user', 'u')
+            ->andWhere('e.user = :user')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('user', $user)
+            ->setParameter('role', "%{$role}%")
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

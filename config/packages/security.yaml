@@ -34,8 +34,32 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: "^/emprunt/[0-9]+/edit", roles: [ROLE_ADMIN, ROLE_EMPRUNTEUR] }
+        - { path: "^/user/[0-9]+/edit", roles: [ROLE_ADMIN] }
+        - { path: "^/user/[0-9]+/new", roles: [ROLE_ADMIN] }
+        - { path: "^/user/[0-9]+/?$", roles: [ROLE_ADMIN] }
+        - { path: ^/user, roles: [ROLE_ADMIN] }
 
+        - { path: "^/livre/[0-9]+/edit", roles: [ROLE_ADMIN] }
+        - { path: "^/livre/[0-9]+/new", roles: [ROLE_ADMIN] }
+        - { path: "^/livre/[0-9]+/?$", roles: [ROLE_ADMIN, ROLE_EMPRUNTEUR] }
+        - { path: ^/livre, roles: [ROLE_ADMIN] }
+
+        - { path: "^/auteur/[0-9]+/edit", roles: [ROLE_ADMIN] }
+        - { path: "^/auteur/[0-9]+/new", roles: [ROLE_ADMIN] }
+        - { path: "^/auteur/[0-9]+/?$", roles: [ROLE_ADMIN] }
+        - { path: ^/auteur, roles: [ROLE_ADMIN] }
+
+        - { path: "^/genre/[0-9]+/edit", roles: [ROLE_ADMIN] }
+        - { path: "^/genre/[0-9]+/new", roles: [ROLE_ADMIN] }
+        - { path: "^/genre/[0-9]+/?$", roles: [ROLE_ADMIN] }
+        - { path: ^/genre, roles: [ROLE_ADMIN] }
+ 
+        - { path: "^/emprunteur/[0-9]+/edit", roles: [ROLE_ADMIN] }
+        - { path: "^/emprunteur/[0-9]+/new", roles: [ROLE_ADMIN] }
+        - { path: "^/emprunteur/[0-9]+/?$", roles: [ROLE_ADMIN] }
+        - { path: ^/emprunteur, roles: [ROLE_ADMIN] }
+ 
+        - { path: "^/emprunt/[0-9]+/edit", roles: [ROLE_ADMIN] }
+        - { path: "^/emprunt/[0-9]+/new", roles: [ROLE_ADMIN] }
         - { path: "^/emprunt/[0-9]+/?$", roles: [ROLE_ADMIN, ROLE_EMPRUNTEUR] }
-
         - { path: ^/emprunt, roles: [ROLE_ADMIN, ROLE_EMPRUNTEUR] }
